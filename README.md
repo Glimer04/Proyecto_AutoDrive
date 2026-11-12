@@ -1,33 +1,23 @@
-# Proyecto Final: Sistema de Alquiler de Vehículos (AutoDrive S.R.L.)
+# AutoDrive S.R.L. - Sistema de Alquiler de Vehículos
 
-**Universidad Autónoma de Santo Domingo (UASD)**
-**Asignatura:** Base de Datos I (INF-4200)
-**Grupo:** 5
+**Asignatura:** Base de Datos I (INF-4200)  
+**Tecnologías:** PHP, MySQL, HTML, CSS, JavaScript.
 
-## 👥 Integrantes
-*   Esteyesí Martínez
-*   Glimmer Méndez
-*   Dodany Pichardo
-*   Jorge Vásquez
-*   Pedro Estanilao
+## 🚀 Enlace de la Aplicación en Vivo
+Puedes probar la aplicación funcionando en línea aquí:  
+🔗 **http://autodrive.rf.gd/login.php**
 
-## 📝 Descripción del Proyecto
-Este repositorio contiene los archivos correspondientes al Proyecto Final de la asignatura Base de Datos I. El sistema (SARV) gestiona los procesos de una empresa de rent-a-car (AutoDrive S.R.L.), incluyendo la administración de clientes, flota, reservas, mantenimiento y facturación.
+**Credenciales de prueba:**
+*   **Administrador:** `admin` / `12345`
+*   **Agente:** `juan_agente` / `12345`
 
 ## 📂 Contenido del Repositorio
-*   `01_Documento_Informe/`: Informe final en formato PDF.
-*   `02_Scripts_SQL/`: Scripts de creación (DDL), inserción (DML), consultas, vistas, triggers y procedimientos almacenados.
-*   `03_Aplicacion/`: Código fuente de la aplicación desarrollada en Python (`sistema.py`) y el archivo de dependencias (`requirements.txt`).
+*   `img/`: Carpeta con el logo, el banner y las fotos de los vehículos.
+*   `*.php`: Archivos de la lógica del sistema (login, reservas, clientes, etc.).
+*   `estilos.css`: Hoja de estilos del diseño.
+*   `autodrive.sql`: Script de creación de las 25 tablas y datos de prueba.
 
-## ⚙️ Requisitos e Instalación
-Para ejecutar este proyecto en tu computadora, sigue estos pasos:
-
-1. Tener instalado **Microsoft SQL Server** y **SQL Server Management Studio (SSMS)**.
-2. Ejecutar los scripts de la carpeta `02_Scripts_SQL` en el siguiente orden:
-   * `01_Creacion_BD.sql`
-   * `02_Insercion_Datos.sql`
-   * `04_Vistas_Triggers_SP.sql`
-3. Tener instalado **Python 3.15** o superior.
-4. Abrir una terminal en la carpeta del proyecto e instalar las dependencias:
-   ```bash
-   pip install -r 03_Aplicacion/requirements.txt
+## ⚙️ Cómo ejecutarlo localmente
+1.  Instala XAMPP.
+2.  Importa `autodrive.sql` en phpMyAdmin.
+3.  Configura `config.php` con tus datos de conexión.
