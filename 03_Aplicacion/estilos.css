@@ -19,12 +19,12 @@ h1 { font-size: 2rem; color: var(--a); margin-bottom: 1.5rem; }
 .cards div { background: var(--c); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-left: 5px solid var(--a); }
 .cards b { display: block; font-size: 2.5rem; color: var(--a); margin-bottom: 0.5rem; }
 
-/* Formularios generales (para registro, reservas, etc) */
+/* Formularios */
 form, .card { background: var(--c); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
 label { display: flex; flex-direction: column; font-weight: 500; color: var(--t); gap: 0.5rem; }
 input, select, textarea { padding: 0.75rem; border: 1px solid var(--b); border-radius: 8px; font-size: 1rem; font-family: inherit; background: var(--bg); transition: border 0.3s; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a); }
-button, .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; background: var(--a); color: #fff; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; text-decoration: none; text-align: center; display: inline-block; }
+button, .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; background: var(--a); color: #fff; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.3s, opacity 0.3s; text-decoration: none; text-align: center; display: inline-block; }
 button:hover, .btn:hover { background: var(--a-hover); }
 .centro { max-width: 500px; margin: 0 auto; text-align: center; }
 
@@ -36,7 +36,7 @@ th { background: #f8fafc; font-weight: 600; color: var(--m); text-transform: upp
 tr:hover { background: #f8fafc; }
 
 /* Mensajes de Alerta */
-.msg { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500; }
+.msg { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500; transition: opacity 0.5s ease; }
 .ok { background: #d1fae5; color: #065f46; border-left: 5px solid var(--exito); }
 .err { background: #fee2e2; color: #991b1b; border-left: 5px solid var(--peligro); }
 
@@ -61,64 +61,27 @@ tr:hover { background: #f8fafc; }
 footer { text-align: center; padding: 2rem; color: var(--m); }
 
 /* =========================================
-   ESTILOS EXCLUSIVOS PARA EL LOGIN (FULL SCREEN)
+   ESTILOS EXCLUSIVOS PARA EL LOGIN
    ========================================= */
-.login-body {
-    margin: 0;
-    padding: 0;
-    background: url('img/banner.jpg') no-repeat center center fixed;
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.login-body { margin: 0; padding: 0; background: url('img/banner.jpg') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center; }
+.login-overlay { width: 100%; height: 100vh; background: rgba(29, 78, 216, 0.7); display: flex; align-items: center; justify-content: center; }
+.login-card { background: #ffffff; width: 100%; max-width: 420px; padding: 3rem 2.5rem; border-radius: 16px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); animation: aparecer 0.5s ease-out; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.login-card .login-form { background: transparent; box-shadow: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.2rem; }
+.login-card .login-form input { width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 8px; background: #f8fafc; }
+.login-card .login-form button { width: 100%; padding: 0.9rem; font-size: 1.1rem; }
 
-.login-overlay {
-    width: 100%;
-    height: 100vh;
-    background: rgba(29, 78, 216, 0.7); /* Tinte azul oscuro */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.login-card {
-    background: #ffffff;
-    width: 100%;
-    max-width: 420px;
-    padding: 3rem 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    animation: aparecer 0.5s ease-out;
-}
-
-@keyframes aparecer {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Sobrescribimos el estilo global de form solo para el login */
-.login-card .login-form {
-    background: transparent;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-
-.login-card .login-form input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    background: #f8fafc;
-}
-
-.login-card .login-form button {
-    width: 100%;
-    padding: 0.9rem;
-    font-size: 1.1rem;
+/* =========================================
+   DISEÑO RESPONSIVO (Móviles)
+   ========================================= */
+@media (max-width: 768px) {
+    header { flex-direction: column; text-align: center; gap: 1rem; padding: 1rem; }
+    nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+    nav a { margin-left: 0; }
+    form { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; }
+    h1 { font-size: 1.5rem; text-align: center; }
+    .tw { overflow-x: auto; }
+    table { min-width: 600px; }
+    .login-card { padding: 2rem 1.5rem; }
 }
