@@ -1,0 +1,193 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"18px","fontFamily":"Arial","primaryColor":"#DEEAF6","primaryTextColor":"#000000","primaryBorderColor":"#1F3864","lineColor":"#1F3864","secondaryColor":"#FFF2CC","tertiaryColor":"#FFFFFF","edgeLabelBackground":"#FFFFFF","attributeBackgroundColorOdd":"#FFFFFF","attributeBackgroundColorEven":"#EAF1FB"}}}%%
+erDiagram
+    Roles ||--o{ Usuarios : "tiene"
+    Clientes ||--o{ Contactos : "posee"
+    Clientes ||--o{ Resenas : "escribe"
+    Clientes ||--o{ Direcciones : "reside en"
+    Marcas ||--o{ Vehiculos : "es de la marca"
+    Categorias ||--o{ Vehiculos : "pertenece a"
+    EstadosVehiculo ||--o{ Vehiculos : "tiene estado"
+    Categorias ||--o{ Tarifas : "se aplica a"
+    Vehiculos ||--o{ Seguros : "asegura"
+    Clientes ||--o{ Reservas : "realiza"
+    Vehiculos ||--o{ Reservas : "reserva"
+    Reservas ||--o| Contratos : "formaliza"
+    Empleados ||--o{ Contratos : "firma"
+    Contratos ||--o{ Entregas : "documenta"
+    Contratos ||--o| Devoluciones : "cierra"
+    Devoluciones ||--o{ Multas : "genera"
+    Contratos ||--o| Facturas : "factura"
+    Facturas ||--o{ Pagos : "salda"
+    MetodosPago ||--o{ Pagos : "se paga con"
+    Vehiculos ||--o{ Mantenimientos : "recibe"
+    Proveedores ||--o{ Mantenimientos : "realiza"
+    Mantenimientos ||--o{ DetalleMantenimiento : "detalla"
+    Vehiculos ||..o{ Auditoria : "audita (sin FK)"
+    Clientes ||..o{ Auditoria : "audita (sin FK)"
+    Reservas ||..o{ Auditoria : "audita (sin FK)"
+    Clientes ||..o{ SolicitudesSoporte : "solicita soporte por correo (sin FK)"
+
+    Roles {
+        INT Roles_ID PK "NOT NULL autoincremental"
+        VARCHAR(50) Roles_Nombre UK "NOT NULL"
+    }
+    Usuarios {
+        INT Usuarios_ID PK "NOT NULL autoincremental"
+        VARCHAR(50) Usuarios_Nombre UK "NOT NULL"
+        VARCHAR(255) Usuarios_Clave "NOT NULL"
+        INT Roles_ID FK "NOT NULL"
+        VARCHAR(20) Usuarios_Estado "NULL DEFAULT Activo"
+    }
+    Empleados {
+        INT Empleados_ID PK "NOT NULL autoincremental"
+        VARCHAR(15) Empleados_Cedula UK "NOT NULL"
+        VARCHAR(100) Empleados_Nombre "NOT NULL"
+        VARCHAR(50) Empleados_Cargo "NOT NULL"
+        DATE Empleados_FechaIngreso "NULL DEFAULT CURRENT_DATE"
+    }
+    Clientes {
+        INT Clientes_ID PK "NOT NULL autoincremental"
+        VARCHAR(15) Clientes_Cedula UK "NOT NULL"
+        VARCHAR(100) Clientes_Nombre "NOT NULL"
+        VARCHAR(20) Clientes_Licencia UK "NOT NULL"
+        DATETIME Clientes_FechaRegistro "NULL DEFAULT CURRENT_TIMESTAMP"
+    }
+    Direcciones {
+        INT Direcciones_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        VARCHAR(150) Direcciones_Detalle "NOT NULL"
+        VARCHAR(50) Direcciones_Ciudad "NOT NULL"
+    }
+    Contactos {
+        INT Contactos_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        VARCHAR(15) Contactos_Telefono "NOT NULL"
+        VARCHAR(100) Contactos_Email "NULL"
+    }
+    Resenas {
+        INT Resenas_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        INT Resenas_Estrellas "NOT NULL"
+        VARCHAR(255) Resenas_Comentario "NULL"
+        DATETIME Resenas_Fecha "NULL DEFAULT CURRENT_TIMESTAMP"
+    }
+    Marcas {
+        INT Marcas_ID PK "NOT NULL autoincremental"
+        VARCHAR(50) Marcas_Nombre UK "NOT NULL"
+    }
+    Categorias {
+        INT Categorias_ID PK "NOT NULL autoincremental"
+        VARCHAR(50) Categorias_Nombre UK "NOT NULL"
+        VARCHAR(150) Categorias_Descripcion "NULL"
+    }
+    EstadosVehiculo {
+        INT EstadosVehiculo_ID PK "NOT NULL autoincremental"
+        VARCHAR(30) EstadosVehiculo_Descripcion UK "NOT NULL"
+    }
+    Vehiculos {
+        INT Vehiculos_ID PK "NOT NULL autoincremental"
+        VARCHAR(10) Vehiculos_Placa UK "NOT NULL"
+        INT Vehiculos_Anio "NOT NULL"
+        INT Marcas_ID FK "NOT NULL"
+        INT Categorias_ID FK "NOT NULL"
+        INT EstadosVehiculo_ID FK "NOT NULL"
+    }
+    Tarifas {
+        INT Tarifas_ID PK "NOT NULL autoincremental"
+        INT Categorias_ID FK "NOT NULL"
+        DECIMAL Tarifas_PrecioDiario "(10,2) NOT NULL"
+    }
+    Seguros {
+        INT Seguros_ID PK "NOT NULL autoincremental"
+        INT Vehiculos_ID FK "NOT NULL"
+        VARCHAR(50) Seguros_Poliza "NOT NULL"
+        DECIMAL Seguros_Costo "(10,2) NOT NULL"
+    }
+    Reservas {
+        INT Reservas_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        INT Vehiculos_ID FK "NOT NULL"
+        DATE Reservas_FechaInicio "NOT NULL"
+        DATE Reservas_FechaFin "NOT NULL"
+        VARCHAR(20) Reservas_Estado "NULL DEFAULT Pendiente"
+    }
+    Contratos {
+        INT Contratos_ID PK "NOT NULL autoincremental"
+        INT Reservas_ID FK, UK "NOT NULL"
+        INT Empleados_ID FK "NOT NULL"
+        DATETIME Contratos_FechaFirma "NULL DEFAULT CURRENT_TIMESTAMP"
+        VARCHAR(20) Contratos_Estado "NULL DEFAULT Activo"
+    }
+    Entregas {
+        INT Entregas_ID PK "NOT NULL autoincremental"
+        INT Contratos_ID FK "NOT NULL"
+        INT Entregas_Kilometraje "NOT NULL"
+        VARCHAR(20) Entregas_NivelCombustible "NOT NULL"
+        VARCHAR(255) Entregas_Observaciones "NULL"
+    }
+    Devoluciones {
+        INT Devoluciones_ID PK "NOT NULL autoincremental"
+        INT Contratos_ID FK, UK "NOT NULL"
+        DATETIME Devoluciones_Fecha "NULL DEFAULT CURRENT_TIMESTAMP"
+        INT Devoluciones_Kilometraje "NOT NULL"
+    }
+    Multas {
+        INT Multas_ID PK "NOT NULL autoincremental"
+        INT Devoluciones_ID FK "NOT NULL"
+        VARCHAR(150) Multas_Motivo "NOT NULL"
+        DECIMAL Multas_Monto "(10,2) NOT NULL"
+    }
+    Facturas {
+        INT Facturas_ID PK "NOT NULL autoincremental"
+        INT Contratos_ID FK, UK "NOT NULL"
+        DATETIME Facturas_FechaEmision "NULL DEFAULT CURRENT_TIMESTAMP"
+        DECIMAL Facturas_MontoTotal "(10,2) NOT NULL"
+        VARCHAR(20) Facturas_Estado "NULL DEFAULT Pendiente"
+    }
+    MetodosPago {
+        INT MetodosPago_ID PK "NOT NULL autoincremental"
+        VARCHAR(50) MetodosPago_Descripcion UK "NOT NULL"
+    }
+    Pagos {
+        INT Pagos_ID PK "NOT NULL autoincremental"
+        INT Facturas_ID FK "NOT NULL"
+        INT MetodosPago_ID FK "NOT NULL"
+        DECIMAL Pagos_Monto "(10,2) NOT NULL"
+        DATETIME Pagos_Fecha "NULL DEFAULT CURRENT_TIMESTAMP"
+    }
+    Proveedores {
+        INT Proveedores_ID PK "NOT NULL autoincremental"
+        VARCHAR(100) Proveedores_Nombre "NOT NULL"
+        VARCHAR(15) Proveedores_Telefono "NULL"
+        VARCHAR(100) Proveedores_Email "NULL"
+    }
+    Mantenimientos {
+        INT Mantenimientos_ID PK "NOT NULL autoincremental"
+        INT Vehiculos_ID FK "NOT NULL"
+        INT Proveedores_ID FK "NOT NULL"
+        DATE Mantenimientos_Fecha "NULL DEFAULT CURRENT_DATE"
+        DECIMAL Mantenimientos_CostoTotal "(10,2) NULL DEFAULT 0.00"
+    }
+    DetalleMantenimiento {
+        INT DetalleMantenimiento_ID PK "NOT NULL autoincremental"
+        INT Mantenimientos_ID FK "NOT NULL"
+        VARCHAR(150) DetalleMantenimiento_Descripcion "NOT NULL"
+        DECIMAL DetalleMantenimiento_Costo "(10,2) NOT NULL"
+    }
+    Auditoria {
+        INT Auditoria_ID PK "NOT NULL autoincremental"
+        VARCHAR(50) Auditoria_Tabla "NOT NULL"
+        VARCHAR(20) Auditoria_Operacion "NOT NULL"
+        DATETIME Auditoria_Fecha "NULL DEFAULT CURRENT_TIMESTAMP"
+        VARCHAR(50) Auditoria_Usuario "NULL"
+        VARCHAR(255) Auditoria_Detalle "NULL"
+    }
+    SolicitudesSoporte {
+        INT SolicitudesSoporte_ID PK "NOT NULL autoincremental"
+        VARCHAR(100) SolicitudesSoporte_Nombre "NOT NULL"
+        VARCHAR(100) SolicitudesSoporte_Email "NOT NULL"
+        VARCHAR(50) SolicitudesSoporte_Categoria "NULL DEFAULT Otro"
+        VARCHAR(500) SolicitudesSoporte_Mensaje "NOT NULL"
+        DATETIME SolicitudesSoporte_Fecha "NULL DEFAULT CURRENT_TIMESTAMP"
+        VARCHAR(20) SolicitudesSoporte_Estado "NULL DEFAULT Pendiente"
+    }

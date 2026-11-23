@@ -1,0 +1,68 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"18px","fontFamily":"Arial","primaryColor":"#DEEAF6","primaryTextColor":"#000000","primaryBorderColor":"#1F3864","lineColor":"#1F3864","secondaryColor":"#FFF2CC","tertiaryColor":"#FFFFFF","edgeLabelBackground":"#FFFFFF","attributeBackgroundColorOdd":"#FFFFFF","attributeBackgroundColorEven":"#EAF1FB"}}}%%
+erDiagram
+    Clientes ||--o{ Contactos : "posee"
+    Clientes ||--o{ Resenas : "escribe"
+    Clientes ||--o{ Direcciones : "reside en"
+    Clientes ||--o{ Reservas : "realiza"
+    Vehiculos ||--o{ Reservas : "reserva"
+    Reservas ||--o| Contratos : "formaliza"
+    Clientes ||..o{ Auditoria : "audita (sin FK)"
+    Reservas ||..o{ Auditoria : "audita (sin FK)"
+    Clientes ||..o{ SolicitudesSoporte : "solicita soporte por correo (sin FK)"
+
+    Clientes {
+        INT Clientes_ID PK "NOT NULL autoincremental"
+        VARCHAR(15) Clientes_Cedula UK "NOT NULL"
+        VARCHAR(100) Clientes_Nombre "NOT NULL"
+        VARCHAR(20) Clientes_Licencia UK "NOT NULL"
+        DATETIME Clientes_FechaRegistro "NULL DEFAULT CURRENT_TIMESTAMP"
+    }
+    Contactos {
+        INT Contactos_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        VARCHAR(15) Contactos_Telefono "NOT NULL"
+        VARCHAR(100) Contactos_Email "NULL"
+    }
+    Direcciones {
+        INT Direcciones_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        VARCHAR(150) Direcciones_Detalle "NOT NULL"
+        VARCHAR(50) Direcciones_Ciudad "NOT NULL"
+    }
+    Resenas {
+        INT Resenas_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        INT Resenas_Estrellas "NOT NULL"
+        VARCHAR(255) Resenas_Comentario "NULL"
+        DATETIME Resenas_Fecha "NULL DEFAULT CURRENT_TIMESTAMP"
+    }
+    Reservas {
+        INT Reservas_ID PK "NOT NULL autoincremental"
+        INT Clientes_ID FK "NOT NULL"
+        INT Vehiculos_ID FK "NOT NULL"
+        DATE Reservas_FechaInicio "NOT NULL"
+        DATE Reservas_FechaFin "NOT NULL"
+        VARCHAR(20) Reservas_Estado "NULL DEFAULT Pendiente"
+    }
+    Auditoria {
+        referencia ver_Modulo_D
+    }
+    Contratos {
+        referencia ver_Modulo_C
+    }
+    SolicitudesSoporte {
+        referencia ver_Modulo_D
+    }
+    Vehiculos {
+        referencia ver_Modulo_B
+    }
+
+    style Auditoria fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000
+    style Clientes fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Contactos fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Contratos fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000
+    style Direcciones fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Resenas fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Reservas fill:#FFF2CC,stroke:#7F6000,stroke-width:3px,color:#000000
+    style SolicitudesSoporte fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000
+    style Vehiculos fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000

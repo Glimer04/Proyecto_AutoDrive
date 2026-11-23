@@ -1,0 +1,47 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","fontFamily":"Arial","primaryColor":"#DEEAF6","primaryTextColor":"#000000","primaryBorderColor":"#1F3864","lineColor":"#1F3864","secondaryColor":"#FFF2CC","tertiaryColor":"#FFFFFF","edgeLabelBackground":"#FFFFFF","attributeBackgroundColorOdd":"#FFFFFF","attributeBackgroundColorEven":"#EAF1FB"}}}%%
+flowchart TB
+    Clientes["<b>CLIENTES</b><br/><u><b>Clientes_ID</b></u> (identificador)<br/>Clientes_Cedula<br/>Clientes_Nombre<br/>Clientes_Licencia<br/>Clientes_FechaRegistro"]:::e_clientes
+    Contactos["<b>CONTACTOS</b><br/><u><b>Contactos_ID</b></u> (identificador)<br/>Contactos_Telefono<br/>Contactos_Email"]:::e_contactos
+    Direcciones["<b>DIRECCIONES</b><br/><u><b>Direcciones_ID</b></u> (identificador)<br/>Direcciones_Detalle<br/>Direcciones_Ciudad"]:::e_direcciones
+    Resenas["<b>RESENAS</b><br/><u><b>Resenas_ID</b></u> (identificador)<br/>Resenas_Estrellas<br/>Resenas_Comentario<br/>Resenas_Fecha"]:::e_resenas
+    Reservas["<b>RESERVAS</b><br/><u><b>Reservas_ID</b></u> (identificador)<br/>Reservas_FechaInicio<br/>Reservas_FechaFin<br/>Reservas_Estado"]:::e_reservas
+    Auditoria["<b>AUDITORIA</b><br/>(ver Módulo D)"]:::stub
+    Contratos["<b>CONTRATOS</b><br/>(ver Módulo C)"]:::stub
+    SolicitudesSoporte["<b>SOLICITUDESSOPORTE</b><br/>(ver Módulo D)"]:::stub
+    Vehiculos["<b>VEHICULOS</b><br/>(ver Módulo B)"]:::stub
+    R0{"posee"}:::rel
+    Clientes ---|"(0,N)"| R0
+    R0 ---|"(1,1)"| Contactos
+    R1{"escribe"}:::rel
+    Clientes ---|"(0,N)"| R1
+    R1 ---|"(1,1)"| Resenas
+    R2{"reside en"}:::rel
+    Clientes ---|"(0,N)"| R2
+    R2 ---|"(1,1)"| Direcciones
+    R3{"realiza"}:::rel
+    Clientes ---|"(0,N)"| R3
+    R3 ---|"(1,1)"| Reservas
+    R4{"reserva"}:::rel
+    Vehiculos ---|"(0,N)"| R4
+    R4 ---|"(1,1)"| Reservas
+    R5{"formaliza"}:::rel
+    Reservas ---|"(0,1)"| R5
+    R5 ---|"(1,1)"| Contratos
+    L0{"audita"}:::rell
+    Clientes -.-|"(0,N)"| L0
+    L0 -.-|"(0,N)"| Auditoria
+    L1{"audita"}:::rell
+    Reservas -.-|"(0,N)"| L1
+    L1 -.-|"(0,N)"| Auditoria
+    L2{"solicita soporte por correo"}:::rell
+    Clientes -.-|"(0,N)"| L2
+    L2 -.-|"(0,N)"| SolicitudesSoporte
+    classDef e_clientes fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000,font-size:16px
+    classDef e_direcciones fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000,font-size:16px
+    classDef e_contactos fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000,font-size:16px
+    classDef e_resenas fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000,font-size:16px
+    classDef e_reservas fill:#FFF2CC,stroke:#7F6000,stroke-width:3px,color:#000000,font-size:16px
+    classDef stub fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000,font-size:15px
+    classDef rel fill:#FFFFFF,stroke:#2E75B6,stroke-width:3px,color:#000000,font-size:15px
+    classDef rell fill:#FFFFFF,stroke:#7F7F7F,stroke-width:3px,stroke-dasharray:5 4,color:#000000,font-size:15px
+    linkStyle default stroke:#1F3864,stroke-width:2.5px

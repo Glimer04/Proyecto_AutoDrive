@@ -1,0 +1,39 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","lineColor":"#1F3864","edgeLabelBackground":"#FFFFFF","primaryTextColor":"#000000"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":60,"rankSpacing":120}}}%%
+flowchart LR
+    CLI["<b>Cliente</b>"]:::ent
+    AGE["<b>Agente de Ventas</b>"]:::ent
+    ADM["<b>Administrador</b>"]:::ent
+    PRO["<b>Proveedor de<br/>repuestos y taller</b>"]:::ent
+
+    P0(("<b>0</b><br/>Sistema de Alquiler<br/>de Vehículos<br/>(SARV)")):::core
+
+    CLI -->|"Credenciales de acceso"| P0
+    CLI -->|"Datos personales"| P0
+    CLI -->|"Solicitud de reserva"| P0
+    CLI -->|"Pago del alquiler"| P0
+    CLI -->|"Solicitud de soporte"| P0
+    CLI -->|"Reseña y calificación del servicio"| P0
+    P0 -->|"Acceso concedido o rechazado"| CLI
+    P0 -->|"Confirmación de registro, reseña y respuesta de soporte"| CLI
+    P0 -->|"Confirmación de reserva, contrato y catálogo"| CLI
+    P0 -->|"Factura y comprobante de pago"| CLI
+
+    AGE -->|"Credenciales de acceso"| P0
+    AGE -->|"Registro de entrega, devolución y multas"| P0
+    AGE -->|"Registro de pagos"| P0
+    P0 -->|"Acceso concedido o rechazado"| AGE
+    P0 -->|"Disponibilidad de la flota y estado de reservas"| AGE
+
+    ADM -->|"Credenciales de acceso"| P0
+    ADM -->|"Datos maestros de usuarios y roles"| P0
+    ADM -->|"Datos maestros de flota y tarifas"| P0
+    ADM -->|"Registro de mantenimientos"| P0
+    P0 -->|"Acceso concedido o rechazado"| ADM
+    P0 -->|"Reportes gerenciales y auditoría"| ADM
+
+    PRO -->|"Servicios y costos de mantenimiento"| P0
+    P0 -->|"Orden de mantenimiento"| PRO
+
+    classDef ent fill:#FFF2CC,stroke:#7F6000,stroke-width:3px,color:#000000,font-size:18px
+    classDef core fill:#1F3864,stroke:#000000,stroke-width:3px,color:#FFFFFF,font-size:20px
+    linkStyle default stroke:#1F3864,stroke-width:2.5px

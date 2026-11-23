@@ -1,0 +1,193 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"18px","fontFamily":"Arial","primaryColor":"#DEEAF6","primaryTextColor":"#000000","primaryBorderColor":"#1F3864","lineColor":"#1F3864","secondaryColor":"#FFF2CC","tertiaryColor":"#FFFFFF","edgeLabelBackground":"#FFFFFF","attributeBackgroundColorOdd":"#FFFFFF","attributeBackgroundColorEven":"#EAF1FB"}}}%%
+erDiagram
+    Roles ||--o{ Usuarios : "tiene"
+    Clientes ||--o{ Contactos : "posee"
+    Clientes ||--o{ Resenas : "escribe"
+    Clientes ||--o{ Direcciones : "reside en"
+    Marcas ||--o{ Vehiculos : "es de la marca"
+    Categorias ||--o{ Vehiculos : "pertenece a"
+    EstadosVehiculo ||--o{ Vehiculos : "tiene estado"
+    Categorias ||--o{ Tarifas : "se aplica a"
+    Vehiculos ||--o{ Seguros : "asegura"
+    Clientes ||--o{ Reservas : "realiza"
+    Vehiculos ||--o{ Reservas : "reserva"
+    Reservas ||--o| Contratos : "formaliza"
+    Empleados ||--o{ Contratos : "firma"
+    Contratos ||--o{ Entregas : "documenta"
+    Contratos ||--o| Devoluciones : "cierra"
+    Devoluciones ||--o{ Multas : "genera"
+    Contratos ||--o| Facturas : "factura"
+    Facturas ||--o{ Pagos : "salda"
+    MetodosPago ||--o{ Pagos : "se paga con"
+    Vehiculos ||--o{ Mantenimientos : "recibe"
+    Proveedores ||--o{ Mantenimientos : "realiza"
+    Mantenimientos ||--o{ DetalleMantenimiento : "detalla"
+    Vehiculos ||..o{ Auditoria : "audita (sin FK)"
+    Clientes ||..o{ Auditoria : "audita (sin FK)"
+    Reservas ||..o{ Auditoria : "audita (sin FK)"
+    Clientes ||..o{ SolicitudesSoporte : "solicita soporte por correo (sin FK)"
+
+    Roles {
+        entero Roles_ID PK "obligatorio"
+        texto Roles_Nombre UK "obligatorio"
+    }
+    Usuarios {
+        entero Usuarios_ID PK "obligatorio"
+        texto Usuarios_Nombre UK "obligatorio"
+        texto Usuarios_Clave "obligatorio"
+        entero Roles_ID FK "obligatorio"
+        texto Usuarios_Estado "opcional"
+    }
+    Empleados {
+        entero Empleados_ID PK "obligatorio"
+        texto Empleados_Cedula UK "obligatorio"
+        texto Empleados_Nombre "obligatorio"
+        texto Empleados_Cargo "obligatorio"
+        fecha Empleados_FechaIngreso "opcional"
+    }
+    Clientes {
+        entero Clientes_ID PK "obligatorio"
+        texto Clientes_Cedula UK "obligatorio"
+        texto Clientes_Nombre "obligatorio"
+        texto Clientes_Licencia UK "obligatorio"
+        fechahora Clientes_FechaRegistro "opcional"
+    }
+    Direcciones {
+        entero Direcciones_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        texto Direcciones_Detalle "obligatorio"
+        texto Direcciones_Ciudad "obligatorio"
+    }
+    Contactos {
+        entero Contactos_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        texto Contactos_Telefono "obligatorio"
+        texto Contactos_Email "opcional"
+    }
+    Resenas {
+        entero Resenas_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        entero Resenas_Estrellas "obligatorio"
+        texto Resenas_Comentario "opcional"
+        fechahora Resenas_Fecha "opcional"
+    }
+    Marcas {
+        entero Marcas_ID PK "obligatorio"
+        texto Marcas_Nombre UK "obligatorio"
+    }
+    Categorias {
+        entero Categorias_ID PK "obligatorio"
+        texto Categorias_Nombre UK "obligatorio"
+        texto Categorias_Descripcion "opcional"
+    }
+    EstadosVehiculo {
+        entero EstadosVehiculo_ID PK "obligatorio"
+        texto EstadosVehiculo_Descripcion UK "obligatorio"
+    }
+    Vehiculos {
+        entero Vehiculos_ID PK "obligatorio"
+        texto Vehiculos_Placa UK "obligatorio"
+        entero Vehiculos_Anio "obligatorio"
+        entero Marcas_ID FK "obligatorio"
+        entero Categorias_ID FK "obligatorio"
+        entero EstadosVehiculo_ID FK "obligatorio"
+    }
+    Tarifas {
+        entero Tarifas_ID PK "obligatorio"
+        entero Categorias_ID FK "obligatorio"
+        decimal Tarifas_PrecioDiario "obligatorio"
+    }
+    Seguros {
+        entero Seguros_ID PK "obligatorio"
+        entero Vehiculos_ID FK "obligatorio"
+        texto Seguros_Poliza "obligatorio"
+        decimal Seguros_Costo "obligatorio"
+    }
+    Reservas {
+        entero Reservas_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        entero Vehiculos_ID FK "obligatorio"
+        fecha Reservas_FechaInicio "obligatorio"
+        fecha Reservas_FechaFin "obligatorio"
+        texto Reservas_Estado "opcional"
+    }
+    Contratos {
+        entero Contratos_ID PK "obligatorio"
+        entero Reservas_ID FK, UK "obligatorio"
+        entero Empleados_ID FK "obligatorio"
+        fechahora Contratos_FechaFirma "opcional"
+        texto Contratos_Estado "opcional"
+    }
+    Entregas {
+        entero Entregas_ID PK "obligatorio"
+        entero Contratos_ID FK "obligatorio"
+        entero Entregas_Kilometraje "obligatorio"
+        texto Entregas_NivelCombustible "obligatorio"
+        texto Entregas_Observaciones "opcional"
+    }
+    Devoluciones {
+        entero Devoluciones_ID PK "obligatorio"
+        entero Contratos_ID FK, UK "obligatorio"
+        fechahora Devoluciones_Fecha "opcional"
+        entero Devoluciones_Kilometraje "obligatorio"
+    }
+    Multas {
+        entero Multas_ID PK "obligatorio"
+        entero Devoluciones_ID FK "obligatorio"
+        texto Multas_Motivo "obligatorio"
+        decimal Multas_Monto "obligatorio"
+    }
+    Facturas {
+        entero Facturas_ID PK "obligatorio"
+        entero Contratos_ID FK, UK "obligatorio"
+        fechahora Facturas_FechaEmision "opcional"
+        decimal Facturas_MontoTotal "obligatorio"
+        texto Facturas_Estado "opcional"
+    }
+    MetodosPago {
+        entero MetodosPago_ID PK "obligatorio"
+        texto MetodosPago_Descripcion UK "obligatorio"
+    }
+    Pagos {
+        entero Pagos_ID PK "obligatorio"
+        entero Facturas_ID FK "obligatorio"
+        entero MetodosPago_ID FK "obligatorio"
+        decimal Pagos_Monto "obligatorio"
+        fechahora Pagos_Fecha "opcional"
+    }
+    Proveedores {
+        entero Proveedores_ID PK "obligatorio"
+        texto Proveedores_Nombre "obligatorio"
+        texto Proveedores_Telefono "opcional"
+        texto Proveedores_Email "opcional"
+    }
+    Mantenimientos {
+        entero Mantenimientos_ID PK "obligatorio"
+        entero Vehiculos_ID FK "obligatorio"
+        entero Proveedores_ID FK "obligatorio"
+        fecha Mantenimientos_Fecha "opcional"
+        decimal Mantenimientos_CostoTotal "opcional"
+    }
+    DetalleMantenimiento {
+        entero DetalleMantenimiento_ID PK "obligatorio"
+        entero Mantenimientos_ID FK "obligatorio"
+        texto DetalleMantenimiento_Descripcion "obligatorio"
+        decimal DetalleMantenimiento_Costo "obligatorio"
+    }
+    Auditoria {
+        entero Auditoria_ID PK "obligatorio"
+        texto Auditoria_Tabla "obligatorio"
+        texto Auditoria_Operacion "obligatorio"
+        fechahora Auditoria_Fecha "opcional"
+        texto Auditoria_Usuario "opcional"
+        texto Auditoria_Detalle "opcional"
+    }
+    SolicitudesSoporte {
+        entero SolicitudesSoporte_ID PK "obligatorio"
+        texto SolicitudesSoporte_Nombre "obligatorio"
+        texto SolicitudesSoporte_Email "obligatorio"
+        texto SolicitudesSoporte_Categoria "opcional"
+        texto SolicitudesSoporte_Mensaje "obligatorio"
+        fechahora SolicitudesSoporte_Fecha "opcional"
+        texto SolicitudesSoporte_Estado "opcional"
+    }

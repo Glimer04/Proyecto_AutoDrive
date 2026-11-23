@@ -1,0 +1,116 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","fontFamily":"Arial","primaryColor":"#DEEAF6","primaryTextColor":"#000000","primaryBorderColor":"#1F3864","lineColor":"#1F3864","secondaryColor":"#FFF2CC","tertiaryColor":"#FFFFFF","edgeLabelBackground":"#FFFFFF","attributeBackgroundColorOdd":"#FFFFFF","attributeBackgroundColorEven":"#EAF1FB"}}}%%
+flowchart TB
+    Roles["<b>ROLES</b><br/><u><b>Roles_ID</b></u> (identificador)<br/>Roles_Nombre"]:::m0
+    Usuarios["<b>USUARIOS</b><br/><u><b>Usuarios_ID</b></u> (identificador)<br/>Usuarios_Nombre<br/>Usuarios_Clave<br/>Usuarios_Estado"]:::m0
+    Empleados["<b>EMPLEADOS</b><br/><u><b>Empleados_ID</b></u> (identificador)<br/>Empleados_Cedula<br/>Empleados_Nombre<br/>Empleados_Cargo<br/>Empleados_FechaIngreso"]:::m0
+    Clientes["<b>CLIENTES</b><br/><u><b>Clientes_ID</b></u> (identificador)<br/>Clientes_Cedula<br/>Clientes_Nombre<br/>Clientes_Licencia<br/>Clientes_FechaRegistro"]:::m1
+    Direcciones["<b>DIRECCIONES</b><br/><u><b>Direcciones_ID</b></u> (identificador)<br/>Direcciones_Detalle<br/>Direcciones_Ciudad"]:::m1
+    Contactos["<b>CONTACTOS</b><br/><u><b>Contactos_ID</b></u> (identificador)<br/>Contactos_Telefono<br/>Contactos_Email"]:::m1
+    Resenas["<b>RESENAS</b><br/><u><b>Resenas_ID</b></u> (identificador)<br/>Resenas_Estrellas<br/>Resenas_Comentario<br/>Resenas_Fecha"]:::m1
+    Marcas["<b>MARCAS</b><br/><u><b>Marcas_ID</b></u> (identificador)<br/>Marcas_Nombre"]:::m2
+    Categorias["<b>CATEGORIAS</b><br/><u><b>Categorias_ID</b></u> (identificador)<br/>Categorias_Nombre<br/>Categorias_Descripcion"]:::m2
+    EstadosVehiculo["<b>ESTADOSVEHICULO</b><br/><u><b>EstadosVehiculo_ID</b></u> (identificador)<br/>EstadosVehiculo_Descripcion"]:::m2
+    Vehiculos["<b>VEHICULOS</b><br/><u><b>Vehiculos_ID</b></u> (identificador)<br/>Vehiculos_Placa<br/>Vehiculos_Anio"]:::m2
+    Tarifas["<b>TARIFAS</b><br/><u><b>Tarifas_ID</b></u> (identificador)<br/>Tarifas_PrecioDiario"]:::m2
+    Seguros["<b>SEGUROS</b><br/><u><b>Seguros_ID</b></u> (identificador)<br/>Seguros_Poliza<br/>Seguros_Costo"]:::m2
+    Reservas["<b>RESERVAS</b><br/><u><b>Reservas_ID</b></u> (identificador)<br/>Reservas_FechaInicio<br/>Reservas_FechaFin<br/>Reservas_Estado"]:::m3
+    Contratos["<b>CONTRATOS</b><br/><u><b>Contratos_ID</b></u> (identificador)<br/>Contratos_FechaFirma<br/>Contratos_Estado"]:::m3
+    Entregas["<b>ENTREGAS</b><br/><u><b>Entregas_ID</b></u> (identificador)<br/>Entregas_Kilometraje<br/>Entregas_NivelCombustible<br/>Entregas_Observaciones"]:::m3
+    Devoluciones["<b>DEVOLUCIONES</b><br/><u><b>Devoluciones_ID</b></u> (identificador)<br/>Devoluciones_Fecha<br/>Devoluciones_Kilometraje"]:::m3
+    Multas["<b>MULTAS</b><br/><u><b>Multas_ID</b></u> (identificador)<br/>Multas_Motivo<br/>Multas_Monto"]:::m3
+    Facturas["<b>FACTURAS</b><br/><u><b>Facturas_ID</b></u> (identificador)<br/>Facturas_FechaEmision<br/>Facturas_MontoTotal<br/>Facturas_Estado"]:::m4
+    MetodosPago["<b>METODOSPAGO</b><br/><u><b>MetodosPago_ID</b></u> (identificador)<br/>MetodosPago_Descripcion"]:::m4
+    Pagos["<b>PAGOS</b><br/><u><b>Pagos_ID</b></u> (identificador)<br/>Pagos_Monto<br/>Pagos_Fecha"]:::m4
+    Proveedores["<b>PROVEEDORES</b><br/><u><b>Proveedores_ID</b></u> (identificador)<br/>Proveedores_Nombre<br/>Proveedores_Telefono<br/>Proveedores_Email"]:::m5
+    Mantenimientos["<b>MANTENIMIENTOS</b><br/><u><b>Mantenimientos_ID</b></u> (identificador)<br/>Mantenimientos_Fecha<br/>Mantenimientos_CostoTotal"]:::m5
+    DetalleMantenimiento["<b>DETALLEMANTENIMIENTO</b><br/><u><b>DetalleMantenimiento_ID</b></u> (identificador)<br/>DetalleMantenimiento_Descripcion<br/>DetalleMantenimiento_Costo"]:::m5
+    Auditoria["<b>AUDITORIA</b><br/><u><b>Auditoria_ID</b></u> (identificador)<br/>Auditoria_Tabla<br/>Auditoria_Operacion<br/>Auditoria_Fecha<br/>Auditoria_Usuario<br/>Auditoria_Detalle"]:::m6
+    SolicitudesSoporte["<b>SOLICITUDESSOPORTE</b><br/><u><b>SolicitudesSoporte_ID</b></u> (identificador)<br/>SolicitudesSoporte_Nombre<br/>SolicitudesSoporte_Email<br/>SolicitudesSoporte_Categoria<br/>SolicitudesSoporte_Mensaje<br/>SolicitudesSoporte_Fecha<br/>SolicitudesSoporte_Estado"]:::m6
+    R0{"tiene"}:::rel
+    Roles ---|"(0,N)"| R0
+    R0 ---|"(1,1)"| Usuarios
+    R1{"posee"}:::rel
+    Clientes ---|"(0,N)"| R1
+    R1 ---|"(1,1)"| Contactos
+    R2{"escribe"}:::rel
+    Clientes ---|"(0,N)"| R2
+    R2 ---|"(1,1)"| Resenas
+    R3{"reside en"}:::rel
+    Clientes ---|"(0,N)"| R3
+    R3 ---|"(1,1)"| Direcciones
+    R4{"es de la marca"}:::rel
+    Marcas ---|"(0,N)"| R4
+    R4 ---|"(1,1)"| Vehiculos
+    R5{"pertenece a"}:::rel
+    Categorias ---|"(0,N)"| R5
+    R5 ---|"(1,1)"| Vehiculos
+    R6{"tiene estado"}:::rel
+    EstadosVehiculo ---|"(0,N)"| R6
+    R6 ---|"(1,1)"| Vehiculos
+    R7{"se aplica a"}:::rel
+    Categorias ---|"(0,N)"| R7
+    R7 ---|"(1,1)"| Tarifas
+    R8{"asegura"}:::rel
+    Vehiculos ---|"(0,N)"| R8
+    R8 ---|"(1,1)"| Seguros
+    R9{"realiza"}:::rel
+    Clientes ---|"(0,N)"| R9
+    R9 ---|"(1,1)"| Reservas
+    R10{"reserva"}:::rel
+    Vehiculos ---|"(0,N)"| R10
+    R10 ---|"(1,1)"| Reservas
+    R11{"formaliza"}:::rel
+    Reservas ---|"(0,1)"| R11
+    R11 ---|"(1,1)"| Contratos
+    R12{"firma"}:::rel
+    Empleados ---|"(0,N)"| R12
+    R12 ---|"(1,1)"| Contratos
+    R13{"documenta"}:::rel
+    Contratos ---|"(0,N)"| R13
+    R13 ---|"(1,1)"| Entregas
+    R14{"cierra"}:::rel
+    Contratos ---|"(0,1)"| R14
+    R14 ---|"(1,1)"| Devoluciones
+    R15{"genera"}:::rel
+    Devoluciones ---|"(0,N)"| R15
+    R15 ---|"(1,1)"| Multas
+    R16{"factura"}:::rel
+    Contratos ---|"(0,1)"| R16
+    R16 ---|"(1,1)"| Facturas
+    R17{"salda"}:::rel
+    Facturas ---|"(0,N)"| R17
+    R17 ---|"(1,1)"| Pagos
+    R18{"se paga con"}:::rel
+    MetodosPago ---|"(0,N)"| R18
+    R18 ---|"(1,1)"| Pagos
+    R19{"recibe"}:::rel
+    Vehiculos ---|"(0,N)"| R19
+    R19 ---|"(1,1)"| Mantenimientos
+    R20{"realiza"}:::rel
+    Proveedores ---|"(0,N)"| R20
+    R20 ---|"(1,1)"| Mantenimientos
+    R21{"detalla"}:::rel
+    Mantenimientos ---|"(0,N)"| R21
+    R21 ---|"(1,1)"| DetalleMantenimiento
+    L0{"audita"}:::rell
+    Vehiculos -.-|"(0,N)"| L0
+    L0 -.-|"(0,N)"| Auditoria
+    L1{"audita"}:::rell
+    Clientes -.-|"(0,N)"| L1
+    L1 -.-|"(0,N)"| Auditoria
+    L2{"audita"}:::rell
+    Reservas -.-|"(0,N)"| L2
+    L2 -.-|"(0,N)"| Auditoria
+    L3{"solicita soporte por correo"}:::rell
+    Clientes -.-|"(0,N)"| L3
+    L3 -.-|"(0,N)"| SolicitudesSoporte
+    classDef m0 fill:#E4DFEC,stroke:#5B3F8C,stroke-width:3px,color:#000000,font-size:16px
+    classDef m1 fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000,font-size:16px
+    classDef m2 fill:#E2EFDA,stroke:#375623,stroke-width:3px,color:#000000,font-size:16px
+    classDef m3 fill:#FFF2CC,stroke:#7F6000,stroke-width:3px,color:#000000,font-size:16px
+    classDef m4 fill:#FCE4D6,stroke:#9C3B0B,stroke-width:3px,color:#000000,font-size:16px
+    classDef m5 fill:#EDEDED,stroke:#404040,stroke-width:3px,color:#000000,font-size:16px
+    classDef m6 fill:#D9F2F0,stroke:#0B6B63,stroke-width:3px,color:#000000,font-size:16px
+    classDef rel fill:#FFFFFF,stroke:#2E75B6,stroke-width:3px,color:#000000,font-size:15px
+    classDef rell fill:#FFFFFF,stroke:#7F7F7F,stroke-width:3px,stroke-dasharray:5 4,color:#000000,font-size:15px
+    linkStyle default stroke:#1F3864,stroke-width:2.5px

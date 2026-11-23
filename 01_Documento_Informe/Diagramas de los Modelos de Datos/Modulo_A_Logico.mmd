@@ -1,0 +1,68 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"18px","fontFamily":"Arial","primaryColor":"#DEEAF6","primaryTextColor":"#000000","primaryBorderColor":"#1F3864","lineColor":"#1F3864","secondaryColor":"#FFF2CC","tertiaryColor":"#FFFFFF","edgeLabelBackground":"#FFFFFF","attributeBackgroundColorOdd":"#FFFFFF","attributeBackgroundColorEven":"#EAF1FB"}}}%%
+erDiagram
+    Clientes ||--o{ Contactos : "posee"
+    Clientes ||--o{ Resenas : "escribe"
+    Clientes ||--o{ Direcciones : "reside en"
+    Clientes ||--o{ Reservas : "realiza"
+    Vehiculos ||--o{ Reservas : "reserva"
+    Reservas ||--o| Contratos : "formaliza"
+    Clientes ||..o{ Auditoria : "audita (sin FK)"
+    Reservas ||..o{ Auditoria : "audita (sin FK)"
+    Clientes ||..o{ SolicitudesSoporte : "solicita soporte por correo (sin FK)"
+
+    Clientes {
+        entero Clientes_ID PK "obligatorio"
+        texto Clientes_Cedula UK "obligatorio"
+        texto Clientes_Nombre "obligatorio"
+        texto Clientes_Licencia UK "obligatorio"
+        fechahora Clientes_FechaRegistro "opcional"
+    }
+    Contactos {
+        entero Contactos_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        texto Contactos_Telefono "obligatorio"
+        texto Contactos_Email "opcional"
+    }
+    Direcciones {
+        entero Direcciones_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        texto Direcciones_Detalle "obligatorio"
+        texto Direcciones_Ciudad "obligatorio"
+    }
+    Resenas {
+        entero Resenas_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        entero Resenas_Estrellas "obligatorio"
+        texto Resenas_Comentario "opcional"
+        fechahora Resenas_Fecha "opcional"
+    }
+    Reservas {
+        entero Reservas_ID PK "obligatorio"
+        entero Clientes_ID FK "obligatorio"
+        entero Vehiculos_ID FK "obligatorio"
+        fecha Reservas_FechaInicio "obligatorio"
+        fecha Reservas_FechaFin "obligatorio"
+        texto Reservas_Estado "opcional"
+    }
+    Auditoria {
+        referencia ver_Modulo_D
+    }
+    Contratos {
+        referencia ver_Modulo_C
+    }
+    SolicitudesSoporte {
+        referencia ver_Modulo_D
+    }
+    Vehiculos {
+        referencia ver_Modulo_B
+    }
+
+    style Auditoria fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000
+    style Clientes fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Contactos fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Contratos fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000
+    style Direcciones fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Resenas fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000
+    style Reservas fill:#FFF2CC,stroke:#7F6000,stroke-width:3px,color:#000000
+    style SolicitudesSoporte fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000
+    style Vehiculos fill:#F2F2F2,stroke:#595959,stroke-width:3px,stroke-dasharray:6 4,color:#000000

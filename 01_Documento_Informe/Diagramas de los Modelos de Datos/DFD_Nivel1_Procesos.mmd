@@ -1,0 +1,80 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"16px","lineColor":"#1F3864","edgeLabelBackground":"#FFFFFF","primaryTextColor":"#000000"},"flowchart":{"htmlLabels":true,"curve":"basis","nodeSpacing":50,"rankSpacing":110}}}%%
+flowchart TB
+    CLI["<b>Cliente</b>"]:::ent
+    AGE["<b>Agente de Ventas</b>"]:::ent
+    ADM["<b>Administrador</b>"]:::ent
+    PRO["<b>Proveedor de<br/>repuestos y taller</b>"]:::ent
+
+    P1("<b>1.0</b><br/>Autenticar y controlar<br/>el acceso"):::proc
+    P2("<b>2.0</b><br/>Gestionar clientes,<br/>soporte y reseñas"):::proc
+    P3("<b>3.0</b><br/>Gestionar reservas<br/>y contratos"):::proc
+    P4("<b>4.0</b><br/>Facturar y<br/>registrar pagos"):::proc
+    P5("<b>5.0</b><br/>Gestionar flota y<br/>mantenimiento"):::proc
+    P6("<b>6.0</b><br/>Generar reportes<br/>y auditoría"):::proc
+
+    D1[("<b>D1</b><br/>Usuarios y Roles")]:::store
+    D2[("<b>D2</b><br/>Clientes, Direcciones<br/>y Contactos")]:::store
+    D3[("<b>D3</b><br/>Flota y Tarifas")]:::store
+    D4[("<b>D4</b><br/>Reservas, Contratos, Entregas,<br/>Devoluciones y Multas")]:::store
+    D5[("<b>D5</b><br/>Facturas y Pagos")]:::store
+    D6[("<b>D6</b><br/>Mantenimientos<br/>y Proveedores")]:::store
+    D7[("<b>D7</b><br/>Auditoría")]:::store
+    D8[("<b>D8</b><br/>Solicitudes de Soporte")]:::store
+    D9[("<b>D9</b><br/>Reseñas de clientes")]:::store
+
+    CLI -->|"Credenciales de acceso"| P1
+    AGE -->|"Credenciales de acceso"| P1
+    ADM -->|"Credenciales de acceso"| P1
+    ADM -->|"Datos maestros de usuarios y roles"| P1
+    P1 -->|"Acceso concedido o rechazado"| CLI
+    P1 -->|"Acceso concedido o rechazado"| AGE
+    P1 -->|"Acceso concedido o rechazado"| ADM
+
+    CLI -->|"Datos personales"| P2
+    CLI -->|"Solicitud de soporte"| P2
+    CLI -->|"Reseña y calificación del servicio"| P2
+    P2 -->|"Confirmación de registro, reseña y respuesta de soporte"| CLI
+
+    CLI -->|"Solicitud de reserva"| P3
+    AGE -->|"Registro de entrega, devolución y multas"| P3
+    P3 -->|"Confirmación de reserva, contrato y catálogo"| CLI
+    P3 -->|"Disponibilidad de la flota y estado de reservas"| AGE
+
+    CLI -->|"Pago del alquiler"| P4
+    AGE -->|"Registro de pagos"| P4
+    P4 -->|"Factura y comprobante de pago"| CLI
+
+    ADM -->|"Datos maestros de flota y tarifas"| P5
+    ADM -->|"Registro de mantenimientos"| P5
+    PRO -->|"Servicios y costos de mantenimiento"| P5
+    P5 -->|"Orden de mantenimiento"| PRO
+
+    P6 -->|"Reportes gerenciales y auditoría"| ADM
+
+    P3 -->|"Contrato cerrado"| P4
+
+    P1 <-->|"Validación de usuario y rol"| D1
+    P2 <-->|"Registro y consulta de clientes"| D2
+    P2 -->|"Solicitudes de soporte"| D8
+    P2 <-->|"Registro y consulta de reseñas"| D9
+    D2 -->|"Datos del cliente"| P3
+    D3 -->|"Disponibilidad y tarifas"| P3
+    P3 -->|"Cambio de estado del vehículo"| D3
+    P3 <-->|"Reservas, contratos, entregas, devoluciones y multas"| D4
+    P3 -->|"Cambios de estado"| D7
+    D4 -->|"Contratos y multas a facturar"| P4
+    P4 <-->|"Facturas y pagos"| D5
+    P5 <-->|"Vehículos, tarifas y estados"| D3
+    P5 <-->|"Mantenimientos y proveedores"| D6
+    D3 -->|"Datos de flota"| P6
+    D4 -->|"Reservas y contratos"| P6
+    D5 -->|"Facturación y pagos"| P6
+    D6 -->|"Mantenimientos"| P6
+    D7 -->|"Registros de auditoría"| P6
+    D8 -->|"Solicitudes pendientes"| P6
+    D9 -->|"Reseñas y calificaciones"| P6
+
+    classDef ent fill:#FFF2CC,stroke:#7F6000,stroke-width:3px,color:#000000,font-size:17px
+    classDef proc fill:#DEEAF6,stroke:#1F3864,stroke-width:3px,color:#000000,font-size:17px
+    classDef store fill:#E2EFDA,stroke:#375623,stroke-width:3px,color:#000000,font-size:16px
+    linkStyle default stroke:#1F3864,stroke-width:2.2px
